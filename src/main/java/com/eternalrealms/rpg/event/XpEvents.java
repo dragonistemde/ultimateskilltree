@@ -17,6 +17,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -72,6 +74,10 @@ public class XpEvents {
     private static double attackOf(LivingEntity e) {
         ModifiableAttributeInstance a = e.getAttribute(Attributes.ATTACK_DAMAGE);
         return a == null ? 2.0 : a.getValue();
+    }
+
+    private static boolean isBoss(LivingEntity e) {
+        return e instanceof WitherEntity || e instanceof EnderDragonEntity;
     }
 
     private static boolean isSeedBlock(Block b) {
@@ -156,7 +162,7 @@ public class XpEvents {
             else if (ds.getImmediateSource() == attacker && !ds.isMagicDamage() && !ds.isExplosion()) skill = Skill.MELEE;
             if (skill != null) {
                 double eff = Math.min(e.getAmount(), target.getHealth()); // dano real, limitado pela vida restante
-                boolean boss = !target.isNonBoss();
+                boolean boss = isBoss(target);
                 int mobLevel = MobXp.estimateLevel(target.getMaxHealth(), attackOf(target));
                 PlayerRpgData d = XpHooks.saved(p).dataOf(p.getUniqueID());
                 double xp = MobXp.damageXp(eff, boss) * MobXp.levelFactor(d.level, mobLevel);
@@ -213,7 +219,7 @@ public class XpEvents {
         Map<UUID, Double> shares = ContributionTracker.computeShares(entry, eligible);
         if (shares.isEmpty()) return;
 
-        boolean boss = !dead.isNonBoss();
+        boolean boss = isBoss(dead);
         int mobLevel = MobXp.estimateLevel(dead.getMaxHealth(), attackOf(dead));
         double base = MobXp.killXp(dead.getMaxHealth(), boss);
         for (Map.Entry<UUID, Double> s : shares.entrySet()) {
