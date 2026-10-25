@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="eternalrealms"
+version="${file.jarVersion}"
+displayName="Eternal Realms RPG"
+description='''
+Mod de RPG para Minecraft 1.16.5: nivel de personagem, atributos, habilidades secundarias e
+experiencia por atividades, com protecoes contra exploracao e configuracao completa.
+'''
+
+[[dependencies.eternalrealms]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36.2.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.eternalrealms]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
