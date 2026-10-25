@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: eternalrealms
+Implementation-Version: 0.1.0
+Specification-Vendor: Eternal Realms
+Specification-Title: eternalrealms
+Implementation-Timestamp: 2026-10-25T15:38:00+0000
+Specification-Version: 1
+Implementation-Vendor: Eternal Realms
+
